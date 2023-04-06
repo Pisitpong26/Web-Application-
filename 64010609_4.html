@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+
+<head></head>
+
+<body>
+    <div id="maincontainer"></div>
+    <script>
+        //Header
+        var header = document.createElement("HEADER");
+        header.setAttribute("id", "myHeader");
+        document.body.appendChild(header);
+        var y = document.createElement("H2");
+        var t = document.createTextNode("Excerise 04: JavaScript&DOM");
+        y.appendChild(t);
+        document.getElementById("myHeader").appendChild(y);
+
+        //Button
+        var realtime = document.createElement("time");
+        realtime.setAttribute("id", "time");
+        document.body.appendChild(realtime);
+        document.getElementById("time").innerHTML = "Click me to display Date and Time";
+        var button = document.createElement("BUTTON");
+        button.appendChild(realtime)
+        document.body.appendChild(button).onclick = function () { startWorker() };
+
+        var w;
+        var i = 0;
+        //web worker
+        function startWorker() {
+            if (typeof (Worker) !== "undefined") {
+                if (typeof (w) == "undefined") {
+                    w = new Worker("demo_workers.js");
+                    button.style.position = 'fixed';
+                    button.style.top = '0px';
+                    button.style.right = '0px';
+                }
+                else {
+                    button.style.position = '';
+                    w.terminate();
+                    w = undefined;
+                }
+                w.onmessage = function (event) {
+                    document.getElementById("time").innerHTML = event.data;
+                    display_c();
+                };
+            }
+            else { document.getElementById("time").innerHTML = "Sorry, your browser does not support Web Workers..."; }
+        }
+        function changeColor() {
+            var color = ["#FFBF00", "#FF7F50", "#DE3163", "#9FE2BF", "#6495ED", "#CCCCFF"];
+            button.style.backgroundColor = color[i];
+            i = (i + 1) % color.length;
+        }
+        function display_c() {
+            if (typeof (w) != "undefined") {
+                setInterval(changeColor(), 1000);
+            }
+        }
+
+        var personal = document.createElement("p");
+        personal.setAttribute("id", "Personal");
+        document.body.appendChild(personal);
+        var y = document.createElement("P");
+        var t = document.createTextNode("Personal Info");
+        y.appendChild(t);
+        document.getElementById("Personal").appendChild(y);
+        personal.style.textDecoration = 'underline';
+        personal.style.color = 'pink';
+
+        personal.onclick = function () { showHide() };
+        personal.addEventListener("mouseover", function () {
+            personal.style.color = "blue";
+            personal.style.backgroundColor = "yellow";
+            personal.style.width = "90px";
+        })
+        personal.addEventListener("mouseout", function () {
+            personal.style.color = "pink";
+            personal.style.backgroundColor = "white";
+        })
+
+        var info = document.createElement("ul");
+
+        var d = document.createElement("li");
+        var e = document.createElement("li");
+        var f = document.createElement("li");
+        var a = document.createTextNode("Pisitpong Plongkerd ID:64010609\n");
+        var b = document.createTextNode("Subject:Web Application Development\n");
+        var c = document.createTextNode("Semester: 2");
+
+        d.appendChild(a);
+        e.appendChild(b);
+        f.appendChild(c);
+
+        info.appendChild(d);
+        info.appendChild(e);
+        info.appendChild(f)
+            ;
+        info.setAttribute("id", "Info");
+        document.body.appendChild(info);
+        document.getElementById("Info").style.display = "none";
+
+        function showHide() {
+            var x = document.getElementById("Info");
+            if (x.style.display == "none") {
+                x.style.display = "block";
+            }
+            else {
+                x.style.display = "none";
+            }
+        }
+
+        var snap = document.createElement("h1");
+        var shot = document.createTextNode("Snapshots");
+        snap.appendChild(shot);
+        document.body.appendChild(snap);
+
+        var list = document.createElement("ul");
+
+        var fireWork = document.createElement("li");
+        var link = document.createElement("a");
+        link.href = '#';
+        link.textContent = "Fireworks";
+        
+        var crest = document.createElement("li");
+        var link2 = document.createElement("a");
+        link2.href = '#';
+        link2.textContent = "Crest";
+
+
+        var action = document.createElement("li");
+        var link3 = document.createElement("a");
+        link3.href = '#';
+        link3.textContent = "Action";
+
+        var buffalo = document.createElement("li");
+        var link4 = document.createElement("a");
+        link4.href = '#';
+        link4.textContent = "Buffalo"
+
+        fireWork.appendChild(link);
+        crest.appendChild(link2);
+        action.appendChild(link3);
+        buffalo.appendChild(link4);
+
+        list.appendChild(fireWork);
+        list.appendChild(crest);
+        list.appendChild(action);
+        list.appendChild(buffalo);
+
+        list.setAttribute("id", "list");
+        document.body.appendChild(list);
+
+        var x = document.createElement("IMG");
+        x.setAttribute("src", "https://as2.ftcdn.net/v2/jpg/01/96/97/53/1000_F_196975369_W7b15V9vjRgNuSGNpJJjm93gpcdHi1h4.jpg");
+        x.setAttribute("alt", "The Pulpit Rock");
+        document.body.appendChild(x);
+
+        fireWork.onclick = function () {
+            x.setAttribute("src", "https://www.thoughtco.com/thmb/QZjds_MjL-yxkNAJN05AaRvBpaE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/low-angle-view-of-firework-display-over-river-during-sunset-604213021-57752e7b3df78cb62c11aba4.jpg");
+            x.setAttribute("width", "500");
+            x.setAttribute("height", "450");
+        };
+
+        crest.onclick = function () {
+            x.setAttribute("src", "https://i5.walmartimages.com/asr/58ae9c59-5d41-43c9-af6c-275ca9557950.aa2452dce6624247abd1ab45eac0becc.jpeg");
+            x.setAttribute("width", "500");
+            x.setAttribute("height", "450");
+        };
+
+        action.onclick = function () {
+            x.setAttribute("src", "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Action_film_clapperboard.svg/800px-Action_film_clapperboard.svg.png");
+            x.setAttribute("width", "500");
+            x.setAttribute("height", "450");
+        };
+
+        buffalo.onclick = function () {
+            x.setAttribute("src", "https://i.natgeofe.com/n/de7be89d-3715-4e89-b83b-ab697ef781b8/thumbnail-cape-buffalo-nationalgeographic_1976203_3x2.jpg");
+            x.setAttribute("width", "600");
+            x.setAttribute("height", "450");
+        };
+
+    </script>
+</body>
+
+</html>
